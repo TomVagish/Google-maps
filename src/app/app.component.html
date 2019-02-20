@@ -1,0 +1,38 @@
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" >Angular - Google maps</a>
+
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+
+          <li class="nav-item " >
+            <a (click)="getCoords('ISRAEL')" href="#" class="nav-link"  >Israel</a>
+          </li>
+          <li class="nav-item ">
+              <a class="nav-link" href="#"  (click)="getCoords('AUSTRALIA')" >Australia</a>
+            </li>
+          <li class="nav-item">
+            <a (click)="getCoords('UNITEDSTATES')" href="#" class="nav-link" >United States</a>
+          </li>
+          <li class="nav-item">
+            <a (click)="getCoords('FRANCE')" href="#"  class="nav-link">France</a>
+          </li>
+          <li class="nav-item">
+            <a (click)="getCoords('JAPAN')" href="#" class="nav-link">Japan</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+
+
+  <agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="onMapClick($event)">
+
+    <agm-marker  [latitude]="latitude" [longitude]="longitude"></agm-marker>
+  </agm-map>
+
+
+
