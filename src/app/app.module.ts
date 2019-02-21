@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AgmCoreModule} from '@agm/core';
 import {HttpModule} from '@angular/http';
 
@@ -19,6 +19,7 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
   ],
   imports: [
+    NgbModule,
     FormsModule,
     BrowserModule,
     AppRoutingModule,

@@ -1,4 +1,40 @@
 
+<ng-template  #content let-modal >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Users location</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+    <table class="table">
+      <thead>
+        <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>latitude</th>
+            <th>longitude</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of usersData; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.location.latitude}}</td>
+              <td>{{item.location.longitude}}</td>
+              </tr>
+      </tbody>
+
+
+
+    </table>
+    </div>
+
+  </ng-template>
+
+
+
+
     <!-- nav bar with 5 top location & search input -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" >Angular - Google maps</a>
@@ -8,7 +44,7 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <!-- <li class="nav-item active">
             <a (click)="getCoords('ISRAEL')" href="#" class="nav-link"  >Israel</a>
 
           </li>
@@ -24,17 +60,21 @@
           </li>
           <li>
             <a (click)="getCoords('JAPAN')" href="#" class="nav-link">Japan</a>
-
+          </li> -->
+          <li>
+            <button (click)="getUsersLocation()" [disabled]="flag" class="btn btn-outline-light">Get users!</button>
           </li>
           <li>
-            <button (click)="getUsersLocation()" class="btn btn-light">Get users location!</button>
+              <button [disabled]="!flag" class="btn btn-outline-primary" (click)="open(content)">Users Details</button>
           </li>
+
         </ul>
         <div  class="form-inline my-2 my-lg-0">
-          <input  class="form-control mr-sm-2" [(ngModel)]="countrysearch" name="searchCountry" type="search" placeholder="Search">
-          <button (click)="getCoordsfromsearch()" class="btn btn-primary">Search</button>
+          <input  class="form-control mr-sm-2" [(ngModel)]="countrysearch" name="searchCountry" type="search" placeholder="Country">
+          <button (click)="getCoordsfromsearch()" class="btn btn-success">Search</button>
 
        </div>
+
 
 
        </div>
