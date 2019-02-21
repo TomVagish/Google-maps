@@ -1,37 +1,62 @@
 
-
+    <!-- nav bar with 5 top location & search input -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" >Angular - Google maps</a>
+ <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-
-          <li class="nav-item " >
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
             <a (click)="getCoords('ISRAEL')" href="#" class="nav-link"  >Israel</a>
+
           </li>
-          <li class="nav-item ">
-              <a class="nav-link" href="#"  (click)="getCoords('AUSTRALIA')" >Australia</a>
-            </li>
           <li class="nav-item">
-            <a (click)="getCoords('UNITEDSTATES')" href="#" class="nav-link" >United States</a>
+            <a class="nav-link" href="#"  (click)="getCoords('AUSTRALIA')" >Australia</a>
+
           </li>
+          <a (click)="getCoords('UNITEDSTATES')" href="#" class="nav-link" >United States</a>
+
           <li class="nav-item">
             <a (click)="getCoords('FRANCE')" href="#"  class="nav-link">France</a>
+
           </li>
-          <li class="nav-item">
+          <li>
             <a (click)="getCoords('JAPAN')" href="#" class="nav-link">Japan</a>
+
           </li>
         </ul>
-      </div>
+
+        <div class="form-inline my-2 my-lg-0">
+          <button (click)="getUsersLocation()" class="btn btn-light">Get users location!</button>
+          <h1> -  </h1>
+        </div>
+
+        <div  class="form-inline my-2 my-lg-0">
+          <input  class="form-control mr-sm-2" [(ngModel)]="countrysearch" name="searchCountry" type="search" placeholder="Search">
+          <span>  |  </span>
+          <button (click)="getCoordsfromsearch()" class="btn btn-primary">Search</button>
+        </div>
+
+
+       </div>
     </nav>
 
 
 
 
-  <agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="onMapClick($event)">
+    <!-- Google maps  -->
+  <agm-map [zoom]="zoom" [latitude]="latitude" [longitude]="longitude"  (mapClick)="onMapClick($event)">
 
     <agm-marker  [latitude]="latitude" [longitude]="longitude"></agm-marker>
+    <agm-marker
+
+    *ngFor="let item of usersData; let index"
+     [latitude]="item.location.latitude"
+      [longitude]="item.location.longitude"
+     ></agm-marker>
+
   </agm-map>
 
 
