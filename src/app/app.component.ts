@@ -23,11 +23,14 @@ export class AppComponent implements OnInit {
 
   // var for users request from Rest api!
   usersData: any;
+  // disabled button on navbar
   flag = false;
+  // var that response on change the zoom of the map
   zoom: number = 8;
 
 
     closeResult: string;
+
 
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -99,6 +102,13 @@ export class AppComponent implements OnInit {
 
   }
 
+
+  userInModal(lat, lng) {
+
+    this.latitude = lat;
+    this.longitude =lng;
+    this.getDismissReason('any');
+  }
 }
 
 
