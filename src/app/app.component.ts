@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
 
   getCoordsfromsearch() {
 
+
     this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?components=locality:${this.countrysearch}country:ES&key=AIzaSyDpLjFOXhx1hMJC7j-E3PevMYplBT9Q0NQ`)
     .subscribe((res) => {
      this.setCoords(res.json());
@@ -57,7 +58,6 @@ export class AppComponent implements OnInit {
 
 
   setCoords(currentCountry) {
-    console.log(currentCountry);
     this.latitude = currentCountry.results[0].geometry.location.lat;
     this.longitude = currentCountry.results[0].geometry.location.lng;
   }
@@ -72,6 +72,8 @@ export class AppComponent implements OnInit {
   }
 
   setUsersLocation(usersObj) {
+
+
 
     this.usersData = usersObj;
     this.zoom = 1;

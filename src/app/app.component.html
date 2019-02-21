@@ -26,18 +26,15 @@
             <a (click)="getCoords('JAPAN')" href="#" class="nav-link">Japan</a>
 
           </li>
+          <li>
+            <button (click)="getUsersLocation()" class="btn btn-light">Get users location!</button>
+          </li>
         </ul>
-
-        <div class="form-inline my-2 my-lg-0">
-          <button (click)="getUsersLocation()" class="btn btn-light">Get users location!</button>
-          <h1> -  </h1>
-        </div>
-
         <div  class="form-inline my-2 my-lg-0">
           <input  class="form-control mr-sm-2" [(ngModel)]="countrysearch" name="searchCountry" type="search" placeholder="Search">
-          <span>  |  </span>
           <button (click)="getCoordsfromsearch()" class="btn btn-primary">Search</button>
-        </div>
+
+       </div>
 
 
        </div>
@@ -50,12 +47,21 @@
   <agm-map [zoom]="zoom" [latitude]="latitude" [longitude]="longitude"  (mapClick)="onMapClick($event)">
 
     <agm-marker  [latitude]="latitude" [longitude]="longitude"></agm-marker>
-    <agm-marker
 
-    *ngFor="let item of usersData; let index"
-     [latitude]="item.location.latitude"
-      [longitude]="item.location.longitude"
-     ></agm-marker>
+    <agm-marker-cluster  imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
+      <agm-marker
+
+      *ngFor="let item of usersData; let index"
+       [latitude]="item.location.latitude"
+        [longitude]="item.location.longitude"
+       ></agm-marker>
+
+
+    </agm-marker-cluster>
+
+
+
+
 
   </agm-map>
 
