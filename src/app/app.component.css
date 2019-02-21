@@ -17,3 +17,16 @@ nav a:hover{
 }
 
 
+.modal-body{
+  height: 400px;
+  overflow-y: auto;
+}
+
+.modal-header{
+  background-color: midnightblue;
+
+}
+
+.modal-title{
+  color: whitesmoke;
+}
