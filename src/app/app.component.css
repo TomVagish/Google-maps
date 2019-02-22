@@ -5,6 +5,9 @@
   height: 650px;
 }
 
+nav{
+  background-color: rgb(37, 37, 37);
+}
 
 nav a{
   color: whitesmoke;

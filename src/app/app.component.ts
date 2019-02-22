@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { NgbModal,ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgForOf } from '@angular/common';
+import { NgForm } from '@angular/forms';
 
 
 
@@ -30,6 +32,7 @@ export class AppComponent implements OnInit {
 
 
     closeResult: string;
+
 
 
   open(content) {
@@ -64,20 +67,16 @@ export class AppComponent implements OnInit {
   }
 
 
-  getCoords(ThechosenCountry) {
 
-   this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?components=locality:${ThechosenCountry}country:ES&key=AIzaSyDpLjFOXhx1hMJC7j-E3PevMYplBT9Q0NQ`)
-    .subscribe((res) => {
-     this.setCoords(res.json());
-    });
-  }
 
-  getCoordsfromsearch() {
+  getCoordsFromsSearch(form: NgForm) {
+     this.countrysearch = form.value.searchCountry;
     this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?components=locality:${this.countrysearch}country:ES&key=AIzaSyDpLjFOXhx1hMJC7j-E3PevMYplBT9Q0NQ`)
     .subscribe((res) => {
      this.setCoords(res.json());
     });
-    this.countrysearch = '';
+
+    form.reset();
   }
 
 
@@ -107,7 +106,8 @@ export class AppComponent implements OnInit {
 
     this.latitude = lat;
     this.longitude =lng;
-    this.getDismissReason('any');
+
+
   }
 }
 
