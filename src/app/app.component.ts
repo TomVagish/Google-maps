@@ -32,11 +32,13 @@ export class AppComponent implements OnInit {
 
 
     closeResult: string;
+    modalReference: any;
 
 
 
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalReference = this.modalService.open(content);
+    this.modalReference.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -69,7 +71,8 @@ export class AppComponent implements OnInit {
 
 
 
-  getCoordsFromsSearch(form: NgForm) {
+  getCoordsFromSearch(form: NgForm) {
+
      this.countrysearch = form.value.searchCountry;
     this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?components=locality:${this.countrysearch}country:ES&key=AIzaSyDpLjFOXhx1hMJC7j-E3PevMYplBT9Q0NQ`)
     .subscribe((res) => {
@@ -83,15 +86,16 @@ export class AppComponent implements OnInit {
   setCoords(currentCountry) {
     this.latitude = currentCountry.results[0].geometry.location.lat;
     this.longitude = currentCountry.results[0].geometry.location.lng;
+    this.zoom = 10;
   }
 
 
 
-  getUsersLocation(){
+  getUsersLocation() {
       this.http.get('https://glacial-escarpment-40412.herokuapp.com/users')
-      .subscribe((res)=>{
+      .subscribe((res) => {
         this.setUsersLocation(res.json());
-      })
+      });
   }
 
   setUsersLocation(usersObj) {
@@ -103,12 +107,17 @@ export class AppComponent implements OnInit {
 
 
   userInModal(lat, lng) {
+    this.modalReference.close();
 
-    this.latitude = lat;
-    this.longitude =lng;
+    setTimeout(() => {
+      this.latitude = lat;
+      this.longitude = lng;
+    }, 1000);
+
 
 
   }
+
 }
 
 

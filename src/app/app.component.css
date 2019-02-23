@@ -2,7 +2,7 @@
  * element that contains the map. */
  agm-map {
    width: 100%;
-  height: 650px;
+  height: 100vh;
 }
 
 nav{
@@ -52,5 +52,11 @@ tbody tr:hover{
 }
 
 
+#mainMarker{
+  transition: 0.1s all;
+}
 
+#mainMarker:hover{
+  transform: scale(1.1,1.1);
+}
 

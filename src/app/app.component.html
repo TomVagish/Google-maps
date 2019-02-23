@@ -24,7 +24,9 @@
                   <td>{{item.name}}</td>
                   <td>{{item.location.latitude}}</td>
                   <td>{{item.location.longitude}}</td>
-                  <td><img (click)="userInModal(item.location.latitude,item.location.longitude)"  src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/map-marker-icon.png"></td>
+                  <td><img (click)="userInModal(item.location.latitude,item.location.longitude)"
+                      src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/map-marker-icon.png">
+                    </td>
                   </tr>
           </tbody>
 
@@ -47,24 +49,19 @@
 
         <ul class="navbar-nav mr-auto">
           <li>
-            <button (click)="getUsersLocation()" [disabled]="flag" class="btn btn-outline-light">Get users!</button>
+            <button (click)="getUsersLocation()" [disabled]="flag" class="btn btn-secondary">Get users!</button>
           </li>
           <li>
-              <button [disabled]="!flag" class="btn btn-outline-primary" (click)="open(content)">Users Details</button>
+              <button [disabled]="!flag" class="btn btn-info" (click)="open(content)">Users Details</button>
           </li>
 
         </ul>
 
         <div>
-            <form  (ngSubmit)="getCoordsFromsSearch(f)" #f="ngForm" ngNativeValidate>
+            <form  (ngSubmit)="getCoordsFromSearch(f)" #f="ngForm" ngNativeValidate>
                 <input  ngModel required  class="form-control" id="searchCountry" name="searchCountry" type="search" placeholder="Search Country..">
                  </form>
         </div>
-
-
-
-
-
 
 
     </nav>
@@ -73,24 +70,22 @@
 
 
     <!-- Google maps  -->
-  <agm-map [zoom]="zoom" [latitude]="latitude" [longitude]="longitude"  (mapClick)="onMapClick($event)">
+  <agm-map [zoom]="zoom"  [latitude]="latitude" [longitude]="longitude"  (mapClick)="onMapClick($event)">
 
-    <agm-marker  [latitude]="latitude" [longitude]="longitude"></agm-marker>
+    <agm-marker   [latitude]="latitude" [longitude]="longitude"></agm-marker>
 
     <agm-marker-cluster  imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
       <agm-marker
 
-      *ngFor="let item of usersData; let index"
+      *ngFor="let item of usersData"
+      [label]="item.name"
        [latitude]="item.location.latitude"
         [longitude]="item.location.longitude"
+
        ></agm-marker>
 
 
     </agm-marker-cluster>
-
-
-
-
 
   </agm-map>
 
