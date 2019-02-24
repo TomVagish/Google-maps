@@ -1,4 +1,6 @@
 
+
+<!-- modal template -->
 <ng-template   #content let-modal >
 
       <div class="modal-header">
@@ -24,7 +26,7 @@
                   <td>{{item.name}}</td>
                   <td>{{item.location.latitude}}</td>
                   <td>{{item.location.longitude}}</td>
-                  <td><img (click)="userInModal(item.location.latitude,item.location.longitude)"
+                  <td><img placement="bottom" ngbTooltip="see on map" (click)="userInModal(item.location.latitude,item.location.longitude)"
                       src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/map-marker-icon.png">
                     </td>
                   </tr>
@@ -41,6 +43,22 @@
 
 
 
+
+  <!--  alert if google api dont found the country -->
+      <ngb-alert  *ngIf="notFoundCounetAlert" (close)="notFoundCounetAlert=false" >
+          <strong>Hey!</strong> place not found.. try again.
+        </ngb-alert>
+
+
+    <!-- success alert if users set successfully on -->
+  <ngb-alert  type="success" *ngIf="usersSetSuccessfullyOnMap" (close)="usersSetSuccessfullyOnMap=false" >
+      <strong>Users set on map successfully!</strong>
+      press on "Users Details" button to see more information
+    </ngb-alert>
+
+
+
+
     <!-- nav bar with 5 top location & search input -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" >Angular - Google maps</a>
@@ -49,17 +67,22 @@
 
         <ul class="navbar-nav mr-auto">
           <li>
-            <button (click)="getUsersLocation()" [disabled]="flag" class="btn btn-secondary">Get users!</button>
+            <ng-template [ngIf]="!flag">
+                <button placement="bottom" ngbTooltip="get 1000 users and set them on map" (click)="getUsersLocation()"  class="btn btn-secondary">Get users!</button>
+            </ng-template>
           </li>
           <li>
-              <button [disabled]="!flag" class="btn btn-info" (click)="open(content)">Users Details</button>
+            <ng-template [ngIf]="flag">
+                <button placement="bottom" ngbTooltip="press to see all users details" class="btn btn-warning"  (click)="open(content)">Users Details</button>
+            </ng-template>
           </li>
 
         </ul>
 
         <div>
             <form  (ngSubmit)="getCoordsFromSearch(f)" #f="ngForm" ngNativeValidate>
-                <input  ngModel required  class="form-control" id="searchCountry" name="searchCountry" type="search" placeholder="Search Country..">
+                <input placement="bottom" ngbTooltip="search country name and press Enter" ngModel required  class="form-control" id="searchCountry" name="searchCountry" type="search" placeholder="Search Country..">
+
                  </form>
         </div>
 
@@ -69,19 +92,19 @@
 
 
 
+
     <!-- Google maps  -->
-  <agm-map [zoom]="zoom"  [latitude]="latitude" [longitude]="longitude"  (mapClick)="onMapClick($event)">
+  <agm-map  [zoom]="zoom"  [latitude]="latitude" [longitude]="longitude"  (mapClick)="onMapClick($event)">
 
     <agm-marker   [latitude]="latitude" [longitude]="longitude"></agm-marker>
+
 
     <agm-marker-cluster  imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
       <agm-marker
 
       *ngFor="let item of usersData"
-      [label]="item.name"
        [latitude]="item.location.latitude"
         [longitude]="item.location.longitude"
-
        ></agm-marker>
 
 

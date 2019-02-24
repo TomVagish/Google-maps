@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Http } from '@angular/http';
 import { NgbModal,ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NgForOf } from '@angular/common';
@@ -11,14 +11,17 @@ import { NgForm } from '@angular/forms';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent  {
   constructor(private http: Http, private modalService: NgbModal) { }
   title = 'google-maps';
+
+
 
 
   // init location in map = Israel!
   latitude = 31.046051;
   longitude  = 34.851612;
+
 
   // var for search input
   countrysearch: string;
@@ -28,41 +31,37 @@ export class AppComponent implements OnInit {
   // disabled button on navbar
   flag = false;
   // var that response on change the zoom of the map
-  zoom: number = 8;
+  zoom =  8;
 
-
-    closeResult: string;
+  // alert vars
+  notFoundCounetAlert = false;
+  usersSetSuccessfullyOnMap = false;
     modalReference: any;
 
+    @ViewChild('alert') alert: ElementRef;
 
 
+    closeAlert() {
+      this.alert.nativeElement.classList.remove('show');
+    }
+
+
+    reset() {
+      this.reset();
+    }
+
+// response to open the modal,save ref to modal for close from different function!
   open(content) {
     this.modalReference = this.modalService.open(content);
-    this.modalReference.result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
-    }
-  }
-
-
-  ngOnInit() {
 
   }
 
 
 
+
+// when Mapclick occur the new coords set in lat & lng  Vars !
   onMapClick(event) {
+
     this.latitude = event.coords.lat;
     this.longitude = event.coords.lng;
 
@@ -70,7 +69,7 @@ export class AppComponent implements OnInit {
 
 
 
-
+// request to google api with the choosen country from input search, clear form!
   getCoordsFromSearch(form: NgForm) {
 
      this.countrysearch = form.value.searchCountry;
@@ -83,14 +82,23 @@ export class AppComponent implements OnInit {
   }
 
 
+  // set the lat & lng from response to map, zoom in,
   setCoords(currentCountry) {
-    this.latitude = currentCountry.results[0].geometry.location.lat;
-    this.longitude = currentCountry.results[0].geometry.location.lng;
-    this.zoom = 10;
+// check if google ppi found the country,else show alert!
+    if (currentCountry.status === 'ZERO_RESULTS') {
+      this.notFoundCounetAlert = true;
+      setTimeout(() => {
+        this.notFoundCounetAlert = false;
+        }, 3000 );
+    } else {
+      this.latitude = currentCountry.results[0].geometry.location.lat;
+      this.longitude = currentCountry.results[0].geometry.location.lng;
+      this.zoom = 10;
+    }
   }
 
 
-
+ // request to users api
   getUsersLocation() {
       this.http.get('https://glacial-escarpment-40412.herokuapp.com/users')
       .subscribe((res) => {
@@ -98,14 +106,20 @@ export class AppComponent implements OnInit {
       });
   }
 
+  // set the users array to local var,zoom out,disable  'get users button'
   setUsersLocation(usersObj) {
     this.usersData = usersObj;
     this.zoom = 1;
     this.flag = true;
+    this.usersSetSuccessfullyOnMap = true;
+
+    setTimeout(() => {
+      this.usersSetSuccessfullyOnMap = false;
+    }, 10000);
 
   }
 
-
+// function that get the latitude & longitude from modal and set them in map & close modal!
   userInModal(lat, lng) {
     this.modalReference.close();
 

@@ -6,6 +6,7 @@
 }
 
 nav{
+
   background-color: rgb(37, 37, 37);
 }
 
@@ -60,3 +61,6 @@ tbody tr:hover{
   transform: scale(1.1,1.1);
 }
 
+ngb-alert{
+  margin-bottom: 0px;
+}

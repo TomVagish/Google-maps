@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AgmCoreModule} from '@agm/core';
 import {HttpModule} from '@angular/http';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
 
@@ -20,6 +20,7 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
   ],
   imports: [
     NgbModule,
+    NgSelectModule,
     FormsModule,
     BrowserModule,
     AppRoutingModule,
