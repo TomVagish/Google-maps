@@ -68,7 +68,7 @@
         <ul class="navbar-nav mr-auto">
           <li>
             <ng-template [ngIf]="!flag">
-                <button placement="bottom" ngbTooltip="get 1000 users and set them on map" (click)="getUsersLocation()"  class="btn btn-secondary">Get users!</button>
+                <button placement="bottom" ngbTooltip="get 100 users and set them on map" (click)="getUsersLocation()"  class="btn btn-secondary">Get users!</button>
             </ng-template>
           </li>
           <li>
@@ -81,7 +81,7 @@
 
         <div>
             <form  (ngSubmit)="getCoordsFromSearch(f)" #f="ngForm" ngNativeValidate>
-                <input placement="bottom" ngbTooltip="search country name and press Enter" ngModel required  class="form-control" id="searchCountry" name="searchCountry" type="search" placeholder="Search Country..">
+                <input placement="bottom" ngbTooltip="search country by name and press Enter" ngModel required  class="form-control" id="searchCountry" name="searchCountry" type="search" placeholder="Search Country..">
 
                  </form>
         </div>
@@ -94,23 +94,27 @@
 
 
     <!-- Google maps  -->
-  <agm-map  [zoom]="zoom"  [latitude]="latitude" [longitude]="longitude"  (mapClick)="onMapClick($event)">
+    <agm-map  [zoom]="zoom" [latitude]="latitude" [longitude]="longitude"  (mapClick)="onMapClick($event)">
 
-    <agm-marker   [latitude]="latitude" [longitude]="longitude"></agm-marker>
-
-
-    <agm-marker-cluster  imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
-      <agm-marker
-
-      *ngFor="let item of usersData"
-       [latitude]="item.location.latitude"
-        [longitude]="item.location.longitude"
-       ></agm-marker>
+        <agm-marker   (centerChange)="latitude+longitude" [latitude]="latitude" [longitude]="longitude"></agm-marker>
 
 
-    </agm-marker-cluster>
+        <agm-marker-cluster  imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
+          <agm-marker
 
-  </agm-map>
+          *ngFor="let item of usersData"
+           [latitude]="item.location.latitude"
+            [longitude]="item.location.longitude"
+            [label]="item.name"
+           ></agm-marker>
+
+
+        </agm-marker-cluster>
+
+      </agm-map>
+
+
+
 
 
 

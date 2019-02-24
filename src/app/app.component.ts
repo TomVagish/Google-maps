@@ -11,16 +11,16 @@ import { NgForm } from '@angular/forms';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent  {
+export class AppComponent implements OnInit  {
   constructor(private http: Http, private modalService: NgbModal) { }
   title = 'google-maps';
 
-
-
+// var for get the current location for each user when the website show up
+  location: any ;
 
   // init location in map = Israel!
-  latitude = 31.046051;
-  longitude  = 34.851612;
+  latitude = 35.942844;
+  longitude =  20.840266;
 
 
   // var for search input
@@ -28,27 +28,31 @@ export class AppComponent  {
 
   // var for users request from Rest api!
   usersData: any;
-  // disabled button on navbar
+  // hide/show buttons on navbar
   flag = false;
   // var that response on change the zoom of the map
-  zoom =  8;
+  zoom =  5;
 
   // alert vars
   notFoundCounetAlert = false;
   usersSetSuccessfullyOnMap = false;
-    modalReference: any;
 
-    @ViewChild('alert') alert: ElementRef;
+  // var for reference to modal
+  modalReference: any ;
 
+  ngOnInit() {
+ // get the current location of the user and set the lat & lng on google map!
+    if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(position => {
+      this.location = position.coords;
+      this.latitude = this.location.latitude;
+      this.longitude = this.location.longitude;
+      this.zoom = 10;
+    });
+ }
 
-    closeAlert() {
-      this.alert.nativeElement.classList.remove('show');
-    }
+  }
 
-
-    reset() {
-      this.reset();
-    }
 
 // response to open the modal,save ref to modal for close from different function!
   open(content) {
@@ -93,14 +97,14 @@ export class AppComponent  {
     } else {
       this.latitude = currentCountry.results[0].geometry.location.lat;
       this.longitude = currentCountry.results[0].geometry.location.lng;
-      this.zoom = 10;
+      this.zoom = 6;
     }
   }
 
 
  // request to users api
   getUsersLocation() {
-      this.http.get('https://glacial-escarpment-40412.herokuapp.com/users')
+      this.http.get('https://glacial-escarpment-40412.herokuapp.com/users?_start=0&_end=2')
       .subscribe((res) => {
         this.setUsersLocation(res.json());
       });
@@ -121,11 +125,13 @@ export class AppComponent  {
 
 // function that get the latitude & longitude from modal and set them in map & close modal!
   userInModal(lat, lng) {
+
     this.modalReference.close();
 
     setTimeout(() => {
-      this.latitude = lat;
-      this.longitude = lng;
+      this.latitude = lat + 1;
+      this.longitude = lng + 1;
+
     }, 1000);
 
 
