@@ -17,18 +17,15 @@
                 <th>Name</th>
                 <th>latitude</th>
                 <th>longitude</th>
-                <th></th>
+
             </tr>
           </thead>
           <tbody>
-              <tr *ngFor="let item of usersData; let i = index">
+              <tr *ngFor="let item of usersData;let i = index">
                   <td>{{i+1}}</td>
                   <td>{{item.name}}</td>
                   <td>{{item.location.latitude}}</td>
                   <td>{{item.location.longitude}}</td>
-                  <td><img placement="bottom" ngbTooltip="see on map" (click)="userInModal(item.location.latitude,item.location.longitude)"
-                      src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/map-marker-icon.png">
-                    </td>
                   </tr>
           </tbody>
 
@@ -42,19 +39,6 @@
   </ng-template>
 
 
-
-
-  <!--  alert if google api dont found the country -->
-      <ngb-alert  *ngIf="notFoundCounetAlert" (close)="notFoundCounetAlert=false" >
-          <strong>Hey!</strong> place not found.. try again.
-        </ngb-alert>
-
-
-    <!-- success alert if users set successfully on -->
-  <ngb-alert  type="success" *ngIf="usersSetSuccessfullyOnMap" (close)="usersSetSuccessfullyOnMap=false" >
-      <strong>Users set on map successfully!</strong>
-      press on "Users Details" button to see more information
-    </ngb-alert>
 
 
 
@@ -90,14 +74,27 @@
     </nav>
 
 
+    <ngb-progressbar *ngIf="progressBarFlag" type="success"  [value]="77" [striped]="true" [animated]="true"></ngb-progressbar>
+
+  <!--  alert if google api dont found the country -->
+  <ngb-alert  *ngIf="notFoundCounetAlert" (close)="notFoundCounetAlert=false" >
+    <strong>Hey!</strong> place not found.. try again.
+  </ngb-alert>
+
+
+<!-- success alert if users set successfully on -->
+<ngb-alert  type="success" *ngIf="usersSetSuccessfullyOnMap" (close)="usersSetSuccessfullyOnMap=false" >
+<strong>Users set on map successfully!</strong>
+press on "Users Details" button to see more information
+</ngb-alert>
+
 
 
 
     <!-- Google maps  -->
     <agm-map  [zoom]="zoom" [latitude]="latitude" [longitude]="longitude"  (mapClick)="onMapClick($event)">
 
-        <agm-marker   (centerChange)="latitude+longitude" [latitude]="latitude" [longitude]="longitude"></agm-marker>
-
+        <agm-marker   [latitude]="latitude" [longitude]="longitude"></agm-marker>
 
         <agm-marker-cluster  imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
           <agm-marker

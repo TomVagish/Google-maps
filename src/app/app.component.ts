@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Http } from '@angular/http';
-import { NgbModal,ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { NgForOf } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 
 
@@ -18,7 +17,7 @@ export class AppComponent implements OnInit  {
 // var for get the current location for each user when the website show up
   location: any ;
 
-  // init location in map = Israel!
+  // init location in map !
   latitude = 35.942844;
   longitude =  20.840266;
 
@@ -38,11 +37,15 @@ export class AppComponent implements OnInit  {
   usersSetSuccessfullyOnMap = false;
 
   // var for reference to modal
-  modalReference: any ;
+  modalReference: any;
+
+  // var for progress bar
+  progressBarFlag = false;
 
   ngOnInit() {
  // get the current location of the user and set the lat & lng on google map!
-    if(navigator.geolocation){
+ // ***** NOT WORK IN GOOGLE CHROME WITHOUT SSL ( HTTPS) *****
+    if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
       this.location = position.coords;
       this.latitude = this.location.latitude;
@@ -75,11 +78,12 @@ export class AppComponent implements OnInit  {
 
 // request to google api with the choosen country from input search, clear form!
   getCoordsFromSearch(form: NgForm) {
-
      this.countrysearch = form.value.searchCountry;
     this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?components=locality:${this.countrysearch}country:ES&key=AIzaSyDpLjFOXhx1hMJC7j-E3PevMYplBT9Q0NQ`)
     .subscribe((res) => {
-     this.setCoords(res.json());
+   this.setCoords(res.json());
+
+
     });
 
     form.reset();
@@ -89,9 +93,11 @@ export class AppComponent implements OnInit  {
   // set the lat & lng from response to map, zoom in,
   setCoords(currentCountry) {
 // check if google ppi found the country,else show alert!
-    if (currentCountry.status === 'ZERO_RESULTS') {
+    if (currentCountry.status !== 'OK') {
+      // display alert with 'error' search
       this.notFoundCounetAlert = true;
       setTimeout(() => {
+        // hide alert with 'error' search
         this.notFoundCounetAlert = false;
         }, 3000 );
     } else {
@@ -104,7 +110,9 @@ export class AppComponent implements OnInit  {
 
  // request to users api
   getUsersLocation() {
-      this.http.get('https://glacial-escarpment-40412.herokuapp.com/users?_start=0&_end=2')
+    // display progress bar
+    this.progressBarFlag = true;
+      this.http.get('https://glacial-escarpment-40412.herokuapp.com/users?_start=0&_end=100')
       .subscribe((res) => {
         this.setUsersLocation(res.json());
       });
@@ -115,28 +123,20 @@ export class AppComponent implements OnInit  {
     this.usersData = usersObj;
     this.zoom = 1;
     this.flag = true;
+    // hide progressbar
+    this.progressBarFlag = false;
+    // display alert with information
     this.usersSetSuccessfullyOnMap = true;
 
     setTimeout(() => {
+      // hide alert with information
       this.usersSetSuccessfullyOnMap = false;
     }, 10000);
 
   }
 
-// function that get the latitude & longitude from modal and set them in map & close modal!
-  userInModal(lat, lng) {
-
-    this.modalReference.close();
-
-    setTimeout(() => {
-      this.latitude = lat + 1;
-      this.longitude = lng + 1;
-
-    }, 1000);
 
 
-
-  }
 
 }
 

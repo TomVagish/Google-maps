@@ -64,3 +64,7 @@ tbody tr:hover{
 ngb-alert{
   margin-bottom: 0px;
 }
+
+ngb-progressbar{
+  margin-bottom: 0px;
+}
