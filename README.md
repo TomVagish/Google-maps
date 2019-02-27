@@ -3,6 +3,9 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
 
 # the app running here : 
+the requests to Google api may not work properly beacuse there is some restrication on API-KEY and HTTPS protocol!
+to gets the best results replace the API-KEY to yours.
+
 http://google-maps-angular.s3-website.us-east-2.amazonaws.com/
 
 
