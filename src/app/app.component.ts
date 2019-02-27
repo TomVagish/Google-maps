@@ -1,17 +1,19 @@
 import { Component, OnInit} from '@angular/core';
-import { Http } from '@angular/http';
+
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
+import { RequestsService } from './requests.service';
 
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [RequestsService]
 })
 export class AppComponent implements OnInit  {
-  constructor(private http: Http, private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private RequuestService: RequestsService) { }
   title = 'google-maps';
 
 // var for get the current location for each user when the website show up
@@ -79,12 +81,11 @@ export class AppComponent implements OnInit  {
 // request to google api with the choosen country from input search, clear form!
   getCoordsFromSearch(form: NgForm) {
      this.countrysearch = form.value.searchCountry;
-    this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?components=locality:${this.countrysearch}country:ES&key=AIzaSyDpLjFOXhx1hMJC7j-E3PevMYplBT9Q0NQ`)
-    .subscribe((res) => {
-   this.setCoords(res.json());
 
-
-    });
+     this.RequuestService.getLatitudeAndLongitude(this.countrysearch)
+     .subscribe((res) => {
+     this.setCoords(res.json());
+     });
 
     form.reset();
   }
@@ -112,7 +113,7 @@ export class AppComponent implements OnInit  {
   getUsersLocation() {
     // display progress bar
     this.progressBarFlag = true;
-      this.http.get('https://glacial-escarpment-40412.herokuapp.com/users?_start=0&_end=100')
+      this.RequuestService.GetUsersInfo()
       .subscribe((res) => {
         this.setUsersLocation(res.json());
       });
