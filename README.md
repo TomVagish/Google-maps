@@ -7,7 +7,7 @@ the requests to Google api may not work properly beacuse there is some restricat
 to gets the best results replace the API-KEY to yours.
 
 
-https://angular-maps.000webhostapp.com/
+http://angular-googlemaps.s3-website.us-east-2.amazonaws.com/
 
 
 # information about The project
