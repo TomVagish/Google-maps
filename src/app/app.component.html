@@ -93,7 +93,7 @@ press on "Users Details" button to see more information
     <!-- Google maps  -->
     <agm-map  [zoom]="zoom" [latitude]="latitude" [longitude]="longitude"  (mapClick)="onMapClick($event)">
 
-        <!-- <agm-marker   [latitude]="latitude" [longitude]="longitude"></agm-marker> -->
+        <agm-marker   [latitude]="latitude" [longitude]="longitude"></agm-marker>
 
         <agm-marker-cluster  imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
           <agm-marker
@@ -102,6 +102,13 @@ press on "Users Details" button to see more information
            [latitude]="item.location.latitude"
             [longitude]="item.location.longitude"
             [label]="item.name"
+            [iconUrl]="{
+              url: 'https://cdn1.iconfinder.com/data/icons/rcons-user-action/512/user-512.png',
+              scaledSize: {
+                  width: 40,
+                  height: 40
+              }
+          }"
            ></agm-marker>
 
 

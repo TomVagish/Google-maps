@@ -16,7 +16,7 @@ export class RequestsService {
   };
 
   public GetUsersInfo(){
-    return this.http.get('https://glacial-escarpment-40412.herokuapp.com/users?_start=0&_end=5');
+    return this.http.get('https://glacial-escarpment-40412.herokuapp.com/users?_start=0&_end=100');
   }
 
 }
