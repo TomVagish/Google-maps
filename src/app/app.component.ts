@@ -19,9 +19,20 @@ export class AppComponent implements OnInit  {
 // var for get the current location for each user when the website show up
   location: any ;
 
+  // array for Marking tracks  - in progress
+  path = [
+    {lat: 31.894756, lng: 34.809322, id: 1}, // Rehovot,israel
+    {lat: 32.083333, lng: 34.7999968, id: 2}, // tel-aviv,israel
+    {lat: 31.771959, lng: 35.217018, id: 3}, // jerusalem,israel
+    {lat: 32.794044, lng: 34.989571, id: 4}, // haifa,israel
+    {lat: 31.25181 , lng: 34.7913, id: 5}, // beer-sheva,israel
+
+  ];
+
   // init location in map !
   latitude = 35.942844;
   longitude =  20.840266;
+
 
 
   // var for search input
@@ -68,6 +79,7 @@ export class AppComponent implements OnInit  {
 
 
 
+
 // when Mapclick occur the new coords set in lat & lng  Vars !
   onMapClick(event) {
 
@@ -102,9 +114,11 @@ export class AppComponent implements OnInit  {
         this.notFoundCounetAlert = false;
         }, 3000 );
     } else {
-      this.latitude = currentCountry.results[0].geometry.location.lat;
-      this.longitude = currentCountry.results[0].geometry.location.lng;
-      this.zoom = 6;
+
+
+       this.latitude = currentCountry.results[0].geometry.location.lat;
+       this.longitude = currentCountry.results[0].geometry.location.lng;
+       this.zoom = 6;
     }
   }
 

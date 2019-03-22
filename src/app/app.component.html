@@ -90,11 +90,10 @@ press on "Users Details" button to see more information
 
 
 
-
     <!-- Google maps  -->
     <agm-map  [zoom]="zoom" [latitude]="latitude" [longitude]="longitude"  (mapClick)="onMapClick($event)">
 
-        <agm-marker   [latitude]="latitude" [longitude]="longitude"></agm-marker>
+        <!-- <agm-marker   [latitude]="latitude" [longitude]="longitude"></agm-marker> -->
 
         <agm-marker-cluster  imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
           <agm-marker
@@ -108,10 +107,105 @@ press on "Users Details" button to see more information
 
         </agm-marker-cluster>
 
+
+        <!-- Marking tracks in progress! -->
+<!--
+        <div *ngFor="let coords of path; let last=last ;let first=first;let i=index" >
+
+          <agm-marker
+        *ngIf="last"
+        [latitude]="coords.lat"
+        [longitude]="coords.lng"
+        [iconUrl]="{
+          url: 'https://i3.wp.com/chittagongit.com/images/finish-flag-icon/finish-flag-icon-15.jpg',
+          scaledSize: {
+              width: 40,
+              height: 40
+          }
+      }"
+         ></agm-marker>
+
+          <agm-marker
+        *ngIf="first"
+        [latitude]="coords.lat"
+        [longitude]="coords.lng"
+        [iconUrl]="{
+          url: 'https://upload.wikimedia.org/wikipedia/commons/8/8b/Green_Arrow_Up_Darker.svg',
+          scaledSize: {
+            width: 30,
+            height: 30
+          }
+        }"
+
+         ></agm-marker>
+
+
+         <agm-marker
+         *ngIf="!first&&!last"
+         [latitude]="coords.lat"
+         [longitude]="coords.lng"
+          ></agm-marker>
+
+
+        </div>
+
+        <agm-polyline
+        [strokeOpacity]="0.5"
+        [strokeColor]="'blue'">
+            <agm-polyline-point *ngFor="let item of path"
+            [latitude]="item.lat"
+            [longitude]="item.lng"
+
+            >
+            </agm-polyline-point>
+
+        </agm-polyline> -->
+
+
       </agm-map>
 
 
 
 
 
+<!--
 
+<ngui-map zoom="8" center="31.771959,35.21701"  scrollwheel="true">
+
+
+  <div *ngFor="let position of path; let last=last ;let first=first;let i=index" >
+
+
+      <marker *ngIf="last"
+      [label]="'Finish !'"
+      [position]="position"
+      [icon]="{
+        url: 'https://i3.wp.com/chittagongit.com/images/finish-flag-icon/finish-flag-icon-15.jpg',
+        anchor: [16,16],
+        size: [32,32],
+        scaledSize: [32,32]
+      }">
+    ></marker>
+    <marker   *ngIf="!last&&!first"  [position]="position" ></marker>
+    <marker *ngIf="first"
+    [label]="'Start !'"
+      [position]="position"
+      [icon]="{
+        url: 'https://cdn0.iconfinder.com/data/icons/user-icons-4/100/user-17-512.png',
+        anchor: [16,16],
+        size: [50,50],
+        scaledSize: [35,35]
+      }"
+      ></marker>
+  </div>
+
+
+  <polyline [editable]="false"
+      [path]="path"
+      [geodesic]="true"
+      [strokeColor]="'blue'"
+      [strokeOpacity]="0.4"
+      [strokeWeight]="3"
+
+      ></polyline>
+  </ngui-map> -->

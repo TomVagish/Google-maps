@@ -8,6 +8,7 @@ import {AgmCoreModule} from '@agm/core';
 import {HttpModule} from '@angular/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
+import { NguiMapModule} from '@ngui/map';
 
 
 
@@ -25,6 +26,7 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
     BrowserModule,
     AppRoutingModule,
     HttpModule,
+    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyDpLjFOXhx1hMJC7j-E3PevMYplBT9Q0NQ'}),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDpLjFOXhx1hMJC7j-E3PevMYplBT9Q0NQ'
     }),
